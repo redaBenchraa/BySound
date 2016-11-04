@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'caviar';
+    src: url(../fonts/CaviarDreams.ttf );
+}
+*{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+#canvas-image {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url("../img/BG.jpg");
+    z-index: -1;
+}
+.copyright{
+  position: relative;
+  width: 100%;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-family: 'caviar',arial;
+  opacity: 0.5;
+  cursor: default;
+}
+.logo{
+  z-index: 100;
+  width: 100%;
+  position: relative;
+  margin-top: 30px;
+  height: 270px;
+  text-align: center;
+}
+.logo img{
+  width: 300;
+}
+.sounds-container {
+  z-index: 1;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.sound-item {
+  z-index: 2;
+  padding: 5px;
+  width: 110;
+  height: 200;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+.sound-item img{
+  width: 100;
+  height: 100;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.sound-item img:hover{
+  opacity: 1;
+}
