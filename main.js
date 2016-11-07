@@ -19,7 +19,19 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1070, height: 570,icon: __dirname + '/icon.ico',frame: false });
-  const tray = new Tray(__dirname + '/icon.ico');
+  var platform = require('os').platform();  
+  var iconIdle = __dirname +'/img/icons/icon.png';
+  if (platform == 'darwin') {  
+    iconIdle = __dirname +'/img/icons/icon.png';
+  } else if (platform == 'win32') {  
+    iconIdle = __dirname +'/img/icons/icon.ico';
+  }
+
+  tray = new Tray(iconIdle);
+  if (platform == "darwin") {  
+      tray.setPressedImage(__dirname + '/img/icons/icon.png');
+  }
+
   tray.on('click', () => {
     mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
   });
