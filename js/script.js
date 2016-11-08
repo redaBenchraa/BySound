@@ -18,6 +18,7 @@ const remote = require('electron').remote;
 var audios = [];
 var sliders = [];
 $(function(){
+  getFiles();
   initBG();
   for(i=0;i<moods.length;i++){
     fs.access(__dirname+"/img/"+moods[i]+".png", (err) => {
@@ -101,6 +102,7 @@ $(function(){
       $(".bar").show("slide", { direction: "left" }, 500);
     });
     $("#closeBar").click(function(){
+      getFiles();
       $("#option").fadeIn();
       $(".bar").hide("slide", { direction: "left" }, 300);
     });
@@ -108,6 +110,23 @@ $(function(){
       random();
     });
     $("#slider").slider('value', globalVol);
+    $('.listProfiles').on('click', '.profile span',function(e) {
+      readXML($(this).text());
+    });
+    $('.listProfiles').on('click', '.profile img',function(e) {
+      if (confirm('Are you sure you want to delete this profile ?')) {
+        var filePath = "profiles/"+$(this).parent().text()+".xml";
+        console.log(filePath);
+        fs.unlinkSync(filePath);
+        getFiles();
+      } else {
+        // Do nothing!
+      }
+
+    });
+
+
+
 });
 function initBG(){
 var granimInstance = new Granim({
@@ -175,4 +194,44 @@ function random(){
       $("#slider"+i).fadeOut();
     }
   }
+}
+function getFiles(){
+  var testFolder = 'profiles/';
+  $(".listProfiles").empty();
+  fs.readdir(testFolder, (err, files) => {
+    files.forEach(file => {
+      $(".listProfiles").append("<div id='" + file + "' class='profile'>"+
+                "<span>" + file.split(".")[0] + "</span>"+
+                "<img src='img/control/close.png'/>"+
+            "</div>");
+      console.log("->"+file);
+  });
+})
+}
+function readXML(file){
+  xml2js = require('xml2js');
+  var parser = new xml2js.Parser();
+  fs.readFile( "profiles/"+file+".xml", function(err, data) {
+      parser.parseString(data, function (err, result) {
+        if(result.profile.globalVol != undefined){
+            globalVol = result.profile.globalVol;
+            $("#slider").slider('value', globalVol);
+        }
+        for(i=0;i<moods.length;i++){
+          if(result.profile.mood[i] != undefined){
+              if(result.profile.mood[i] != 0){
+                  $("#"+moods[i] +" img").css("opacity","1");
+                  audios[i].volume = (result.profile.mood[i]/100) * (globalVol/100);
+                  audios[i].play();
+                  $("#slider"+i).slider('value', result.profile.mood[i]);
+                  $("#slider"+i).fadeIn();
+              }else{
+                audios[i].pause();
+                $("#"+moods[i]+" img").css("opacity","0.5");
+                $("#slider"+i).fadeOut();
+              }
+            }
+        }
+      });
+  });
 }

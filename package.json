@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "pretty-bytes": "^2.0.1"
+    "pretty-bytes": "^2.0.1",
+    "xml2js": "*"
   },
   "devDependencies": {
     "electron-installer-windows": "^0.2.0",
