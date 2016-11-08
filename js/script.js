@@ -1,7 +1,18 @@
-
 $(function(){
   initBG();
   var moods = ["rain", "storm", "wind", "night","flame","wave","forest","coffee"];
+  var rands = [
+    [20,40,50,50,0,0,0,0],
+    [50,0,0,0,0,0,0,50],
+    [0,0,0,50,50,0,0,0],
+    [0,0,30,40,50,0,0,0],
+    [50,0,0,0,0,0,0,50],
+    [0,0,0,0,0,50,0,0],
+    [0,40,0,0,0,50,0,0],
+    [0,0,0,0,0,50,50,0],
+    [0,0,0,0,60,0,50,0],
+    [0,0,50,60,0,0,0,0]
+  ];
   var audios = [];
   var sliders = [];
   const fs = require('fs');
@@ -81,7 +92,8 @@ $(function(){
       shell.openExternal('https://www.facebook.com/MedRedaBenchraa');
     });
     $("#github").click(function(){
-      shell.openExternal('https://www.github.com/Redb3n');
+      //shell.openExternal('https://www.github.com/Redb3n');
+      random(rands,moods,audios);
     });
 
 });
@@ -122,4 +134,21 @@ function createSlider(id,Audio){
       console.log(value);
     },
   });
+}
+
+function random(rands,moods,audios){
+  var o = Math.floor(Math.random()*(10-1+1)+1);
+  for(i=0;i<rands[o].length;i++){
+    if(rands[o][i] != 0){
+        $("#"+moods[i] +" img").css("opacity","1");
+        audios[i].volume = rands[o][i]/100;
+        audios[i].play();
+        $("#slider"+i).slider('value', rands[o][i]);
+        $("#slider"+i).fadeIn();
+    }else{
+      audios[i].pause();
+      $("#"+moods[i]+" img").css("opacity","0.5");
+      $("#slider"+i).fadeOut();
+    }
+  }
 }
