@@ -5,6 +5,7 @@ $(function(){
   var audios = [];
   var sliders = [];
   const fs = require('fs');
+  const {shell} = require('electron');
   const remote = require('electron').remote;
   for(i=0;i<moods.length;i++){
     fs.access(__dirname+"/img/"+moods[i]+".png", (err) => {
@@ -75,6 +76,14 @@ $(function(){
         remote.BrowserWindow.getFocusedWindow().setFullScreen(true);
       }
     });
+
+    $("#facebook").click(function(){
+      shell.openExternal('https://www.facebook.com/MedRedaBenchraa');
+    });
+    $("#github").click(function(){
+      shell.openExternal('https://www.github.com/Redb3n');
+    });
+
 });
 function initBG(){
 var granimInstance = new Granim({

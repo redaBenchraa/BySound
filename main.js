@@ -19,16 +19,17 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1070, height: 570,icon: __dirname + '/icon.ico',frame: false });
-  var platform = require('os').platform();  
+
+  var platform = require('os').platform();
   var iconIdle = __dirname +'/img/icons/icon.png';
-  if (platform == 'darwin') {  
+  if (platform == 'darwin') {
     iconIdle = __dirname +'/img/icons/icon.png';
-  } else if (platform == 'win32') {  
+  } else if (platform == 'win32') {
     iconIdle = __dirname +'/img/icons/icon.ico';
   }
 
   tray = new Tray(iconIdle);
-  if (platform == "darwin") {  
+  if (platform == "darwin") {
       tray.setPressedImage(__dirname + '/img/icons/icon.png');
   }
 
@@ -52,7 +53,7 @@ app.on('ready', function() {
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
- //mainWindow.setMenu(null);
+  //mainWindow.setMenu(null);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

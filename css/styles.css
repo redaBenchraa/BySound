@@ -11,6 +11,19 @@
             user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+a{
+  *:none;
+  -webkit-app-region: no-drag;
+}
+.copyright{
+  z-index: 1001;
+  -webkit-app-region: no-drag;
+}
+.copyright img{
+  margin-top: 10px;
+  padding: 2;
+  cursor: pointer;
+}
 #canvas-image {
     position: fixed;
     display: block;
@@ -84,9 +97,10 @@
 
 .sound-item {
   z-index: 2;
-  padding: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
   width: 110;
-  height: 200;
+  height: 170;
   color: white;
   font-weight: bold;
   font-size: 3em;
