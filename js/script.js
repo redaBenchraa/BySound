@@ -96,7 +96,7 @@ $(function(){
     $("#github").click(function(){
       shell.openExternal('https://www.github.com/Redb3n');
     });
-    $("#option").click(function(){
+    $("#option").click(function(event){
       $("#option").fadeOut();
       $(".bar").show("slide", { direction: "left" }, 500);
     });

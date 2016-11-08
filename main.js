@@ -18,7 +18,7 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1070, height: 570,icon: __dirname + '/icon.ico',frame: false });
+  mainWindow = new BrowserWindow({width: 1070, height: 570,'minHeight': 500,'minWidth': 600,icon: __dirname + '/icon.ico',frame: false });
 
   var platform = require('os').platform();
   var iconIdle = __dirname +'/img/icons/icon.png';
