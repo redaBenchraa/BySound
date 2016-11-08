@@ -1,23 +1,24 @@
+var globalVol = 70;
+var moods = ["rain", "storm", "wind", "night","flame","wave","forest","coffee"];
+var rands = [
+  [20,40,50,50,0,0,0,0],
+  [50,0,0,0,0,0,0,50],
+  [0,0,0,50,50,0,0,0],
+  [0,0,30,40,50,0,0,0],
+  [50,0,0,0,0,0,0,50],
+  [0,0,0,0,0,50,0,0],
+  [0,40,0,0,0,50,0,0],
+  [0,0,0,0,0,50,50,0],
+  [0,0,0,0,60,0,50,0],
+  [0,0,50,60,0,0,0,0]
+];
+const fs = require('fs');
+const {shell} = require('electron');
+const remote = require('electron').remote;
+var audios = [];
+var sliders = [];
 $(function(){
   initBG();
-  var moods = ["rain", "storm", "wind", "night","flame","wave","forest","coffee"];
-  var rands = [
-    [20,40,50,50,0,0,0,0],
-    [50,0,0,0,0,0,0,50],
-    [0,0,0,50,50,0,0,0],
-    [0,0,30,40,50,0,0,0],
-    [50,0,0,0,0,0,0,50],
-    [0,0,0,0,0,50,0,0],
-    [0,40,0,0,0,50,0,0],
-    [0,0,0,0,0,50,50,0],
-    [0,0,0,0,60,0,50,0],
-    [0,0,50,60,0,0,0,0]
-  ];
-  var audios = [];
-  var sliders = [];
-  const fs = require('fs');
-  const {shell} = require('electron');
-  const remote = require('electron').remote;
   for(i=0;i<moods.length;i++){
     fs.access(__dirname+"/img/"+moods[i]+".png", (err) => {
       if(err) {
@@ -26,7 +27,7 @@ $(function(){
         window.close();
       }
     });
-    $("ul").append("<li style='display:none' class='sound-item' id='"+moods[i]+"'><img src='"+__dirname+"/img/"+ moods[i] +".png'><div id='slider"+i+"'/></section></li>").find('#'+moods[i]).fadeIn(3000);
+    $("ul").append("<li style='display:none' class='sound-item' id='"+moods[i]+"'><img src='"+__dirname+"/img/"+ moods[i] +".png'><div id='slider"+i+"' > </div></li>").find('#'+moods[i]).fadeIn(3000);
     fs.access(__dirname+'/sounds/' + moods[i] + '.mp3', (err) => {
       if(err){
         alert(err);
@@ -40,6 +41,7 @@ $(function(){
     audios.push(audio);
     createSlider('slider'+i,audio);
   }
+  createSlider('slider',null);
 
     $(".sound-item img").click(function(){
       var audioId = $(this).next().attr('id').substring(6, 7);
@@ -92,10 +94,20 @@ $(function(){
       shell.openExternal('https://www.facebook.com/MedRedaBenchraa');
     });
     $("#github").click(function(){
-      //shell.openExternal('https://www.github.com/Redb3n');
-      random(rands,moods,audios);
+      shell.openExternal('https://www.github.com/Redb3n');
     });
-
+    $("#option").click(function(){
+      $("#option").fadeOut();
+      $(".bar").show("slide", { direction: "left" }, 500);
+    });
+    $("#closeBar").click(function(){
+      $("#option").fadeIn();
+      $(".bar").hide("slide", { direction: "left" }, 300);
+    });
+    $("#shuffle").click(function(){
+      random();
+    });
+    $("#slider").slider('value', globalVol);
 });
 function initBG(){
 var granimInstance = new Granim({
@@ -116,9 +128,8 @@ var granimInstance = new Granim({
   granimInstance.play();
 }
 function createSlider(id,Audio){
-
   var slider  = $('#'+id);
-  slider.css("display",'none');
+  if(Audio != null) slider.css("display",'none');
   var value;
   slider.slider({
     range: "min",
@@ -127,16 +138,29 @@ function createSlider(id,Audio){
     start: function(event,ui) {},
     slide: function(event, ui) {
     value  = slider.slider('value');
-    Audio.volume = value/100;
+      if(Audio != null){
+        Audio.volume = (value/100) * (globalVol/100);
+      }  else {
+        for(i=0;i<moods.length;i++){
+            vlm = $("#slider"+i).slider('value')*globalVol/100;
+            vlm/=100;
+            if(vlm >= 0 && vlm <= 1){
+              audios[i].volume = vlm;
+            }
+        }
+        globalVol = value;
+      }
+
     },
     stop: function(event,ui) {
-      Audio.volume = value/100;
-      console.log(value);
+        if(Audio!=null){
+          Audio.volume = (value/100) * (globalVol/100) ;
+        }
     },
   });
 }
 
-function random(rands,moods,audios){
+function random(){
   var o = Math.floor(Math.random()*(10-1+1)+1);
   for(i=0;i<rands[o].length;i++){
     if(rands[o][i] != 0){

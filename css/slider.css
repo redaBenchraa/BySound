@@ -1,20 +1,12 @@
-section {
-	width: 100;
-	height: auto;
-	margin: 5 auto 0;
-	position: relative;
-	display: none;
-}
 div[id^='slider']{
 	margin-left	: 8;
 	border-width: 0px;
 	border-radius: 100px;
 	width: 100px;
-	position: absolute;
+	position: relative;
 	height: 6px;
 	background-color: white;
 	-webkit-app-region: no-drag;
-
 }
 .ui-slider-handle {
 	position: absolute;
