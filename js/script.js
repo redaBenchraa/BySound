@@ -116,13 +116,24 @@ $(function(){
     $('.listProfiles').on('click', '.profile img',function(e) {
       if (confirm('Are you sure you want to delete this profile ?')) {
         var filePath = "profiles/"+$(this).parent().text()+".xml";
-        console.log(filePath);
         fs.unlinkSync(filePath);
         getFiles();
       } else {
         // Do nothing!
       }
 
+    });
+    $('.listProfiles').on('click', '.profile span',function(e) {
+      readXML($(this).text());
+    });
+
+    $(".profileInput img").click(function(){
+        if($(".profileInput input").val().length > 0 && $(".profileInput input").val().length < 15){
+          saveXML($(".profileInput input").val());
+          getFiles();
+          $(".profileInput input").val("");
+        }
+        else alert("Invalid Name");
     });
 
 
@@ -152,7 +163,7 @@ function createSlider(id,Audio){
   var value;
   slider.slider({
     range: "min",
-    min: 0,
+    min: 1,
     value: 50,
     start: function(event,ui) {},
     slide: function(event, ui) {
@@ -213,17 +224,17 @@ function readXML(file){
   var parser = new xml2js.Parser();
   fs.readFile( "profiles/"+file+".xml", function(err, data) {
       parser.parseString(data, function (err, result) {
-        if(result.profile.globalVol != undefined){
-            globalVol = result.profile.globalVol;
+        if(result.root.globalVol != undefined){
+            globalVol = result.root.globalVol;
             $("#slider").slider('value', globalVol);
         }
         for(i=0;i<moods.length;i++){
-          if(result.profile.mood[i] != undefined){
-              if(result.profile.mood[i] != 0){
-                  $("#"+moods[i] +" img").css("opacity","1");
-                  audios[i].volume = (result.profile.mood[i]/100) * (globalVol/100);
+          if(result.root.mood[i] != undefined){
+              if(result.root.mood[i] != 0){
+                  $("#"+moods[i] +" img").css("opacity","1");mood :
+                  audios[i].volume = (result.root.mood[i]/100) * (globalVol/100);
                   audios[i].play();
-                  $("#slider"+i).slider('value', result.profile.mood[i]);
+                  $("#slider"+i).slider('value', result.root.mood[i]);
                   $("#slider"+i).fadeIn();
               }else{
                 audios[i].pause();
@@ -234,4 +245,23 @@ function readXML(file){
         }
       });
   });
+}
+function saveXML(name){
+  var slideV = [];
+  for(i=0;i<moods.length;i++){
+    if(!audios[i].paused) slideV[i] = $("#slider"+i).slider('value');
+    else slideV[i] = 0;
+  }
+  i=0;
+  var obj = {
+    globalVol : $("#slider").slider('value'),
+    mood : [slideV[i++],slideV[i++],slideV[i++],slideV[i++],slideV[i++],slideV[i++],slideV[i++],slideV[i++]]
+  };
+  var xml2js = require('xml2js');
+  var builder = new xml2js.Builder();
+  var xml = builder.buildObject(obj);
+  fs.writeFile('profiles/'+ name +'.xml', xml, (err) => {
+      if (err) console.log(arr);
+      console.log('It\'s saved!');
+    });
 }

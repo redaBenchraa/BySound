@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-
-<profile>
+<root>
   <globalVol>40</globalVol>
   <mood>10</mood>
   <mood>20</mood>
@@ -10,4 +9,4 @@
   <mood>60</mood>
   <mood>70</mood>
   <mood>80</mood>
-</profile>
+</root>
