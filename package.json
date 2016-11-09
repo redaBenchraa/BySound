@@ -4,7 +4,6 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "dotenv": "^2.0.0",
     "pretty-bytes": "^2.0.1",
     "xml2js": "*"
   },
