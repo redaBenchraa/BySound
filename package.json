@@ -7,7 +7,6 @@
     "xml2js": "*"
   },
   "devDependencies": {
-    "electron-installer-windows": "^0.2.0",
     "electron-packager": "*",
     "electron-prebuilt": "*"
   },
@@ -15,7 +14,6 @@
     "start": "electron main.js",
     "build": "electron-packager . app --platform win32 --arch all --out dist/",
     "archive": "asar pack dist/app-win32-ia32/resources/app dist/app-win32-ia32/resources/app.asar",
-    "setup": "electron-installer-windows --src dist/app-win32-ia32/ --dest dist/installers/"
   },
   "author": "Reda Benchraa",
   "license": "GPL"
