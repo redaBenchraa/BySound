@@ -135,9 +135,19 @@ $(function(){
         }
         else alert("Invalid Name");
     });
-
-
-
+    $("#globalVolume").click(function(){
+        if(globalVol != 0){
+          $("#slider").slider("value",0);
+          globalVol = 0;
+        }else{
+          $("#slider").slider("value",100);
+          globalVol = 100;
+        }
+        for(i=0;i<moods.length;i++){
+            vlm = ($("#slider"+i).slider('value')/100) *(globalVol/100);
+            if(vlm >= 0 && vlm <= 1) audios[i].volume = vlm;
+        }
+    });
 });
 function initBG(){
 var granimInstance = new Granim({
