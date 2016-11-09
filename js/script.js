@@ -115,7 +115,7 @@ $(function(){
     });
     $('.listProfiles').on('click', '.profile img',function(e) {
       if (confirm('Are you sure you want to delete this profile ?')) {
-        var filePath = __dirname+"/../profiles/"+$(this).parent().text()+".xml";
+        var filePath = process.env.HOME+"/BySoundProfiles/"+$(this).parent().text()+".xml";
         fs.unlinkSync(filePath);
         getFiles();
       } else {
@@ -207,7 +207,7 @@ function random(){
   }
 }
 function getFiles(){
-  var testFolder = __dirname+'/../profiles/';
+  var testFolder = process.env.HOME+'/BySoundProfiles/';
   if (!fs.existsSync(testFolder)) fs.mkdirSync(testFolder);
   $(".listProfiles").empty();
   fs.readdir(testFolder, (err, files) => {
@@ -223,7 +223,7 @@ function getFiles(){
 function readXML(file){
   xml2js = require('xml2js');
   var parser = new xml2js.Parser();
-  fs.readFile( __dirname+"/../profiles/"+file+".xml", function(err, data) {
+  fs.readFile( process.env.HOME+"/BySoundProfiles/"+file+".xml", function(err, data) {
       parser.parseString(data, function (err, result) {
         if(result.root.globalVol != undefined){
             globalVol = result.root.globalVol;
@@ -261,7 +261,7 @@ function saveXML(name){
   var xml2js = require('xml2js');
   var builder = new xml2js.Builder();
   var xml = builder.buildObject(obj);
-  fs.writeFile(__dirname+'/../profiles/'+ name +'.xml', xml, (err) => {
+  fs.writeFile(process.env.HOME+'/BySoundProfiles/'+ name +'.xml', xml, (err) => {
       if (err) console.log(arr);
       console.log('It\'s saved!');
     });
