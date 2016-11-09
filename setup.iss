@@ -2,25 +2,29 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "BySound"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "BySound, Inc."
+#define MyAppVersion "1.1.0"
+#define MyAppPublisher "Reda Benchraa, Inc."
+#define MyAppURL "https://github.com/Redb3n"
 #define MyAppExeName "BySound.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{917DDD30-2AC3-4594-801F-BEA0E675A673}
+AppId={{8566581B-D4A0-417A-83A6-695DEE7B6C46}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
-DefaultGroupName={#MyAppName}
-AllowNoIcons=yes
-LicenseFile=D:\Projects\Electron\BySound\dist\app-win32-ia32\LICENSE
+DisableDirPage=yes
+DisableProgramGroupPage=yes
+LicenseFile=D:\Projects\Electron\BySound\dist\app-win32-ia32\LICENSE.rtf
 OutputDir=D:\Projects\Electron\BySound\dist
-OutputBaseFilename=BySound-Setup
+OutputBaseFilename=BySound-setup
 SetupIconFile=D:\Projects\Electron\BySound\icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -42,7 +46,6 @@ Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\ffmpeg.dll"; DestDir: 
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\natives_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\node.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\snapshot_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
@@ -50,13 +53,12 @@ Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\ui_resources_200_perce
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\version"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\views_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\xinput1_3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Projects\Electron\BySound\dist\app-win32-ia32\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
+Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
