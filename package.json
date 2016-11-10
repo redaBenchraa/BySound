@@ -13,7 +13,7 @@
   "scripts": {
     "start": "electron main.js",
     "build": "electron-packager . app --platform win32 --arch all --out dist/",
-    "archive": "asar pack dist/app-win32-ia32/resources/app dist/app-win32-ia32/resources/app.asar",
+    "archive": "asar pack dist/app-win32-ia32/resources/app dist/app-win32-ia32/resources/app.asar"
   },
   "author": "Reda Benchraa",
   "license": "GPL"
