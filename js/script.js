@@ -17,6 +17,7 @@ const {shell} = require('electron');
 const remote = require('electron').remote;
 var audios = [];
 var sliders = [];
+var timerVar;
 $(function(){
   getFiles();
   initBG();
@@ -109,6 +110,18 @@ $(function(){
     $("#shuffle").click(function(){
       random();
     });
+    $("#timer").click(function(){
+
+      var timer = $(".timer input").val();
+      if($.isNumeric(timer)){
+        clearTimeout(timerVar);
+        timerVar = setTimeout(loadTimer, timer*60*1000);
+        $("#clockdiv").fadeIn();
+      }else{
+        alertify.message('Please enter a numerical value');
+        }
+    });
+
     $("#slider").slider('value', globalVol);
     $('.listProfiles').on('click', '.profile span',function(e) {
       readXML($(this).text());
@@ -161,7 +174,7 @@ var granimInstance = new Granim({
                 ['#485563', '#29323c', '#29323c'],
                 ['#ff3131', '#b4002a', '#ef1630']
             ],
-            transitionSpeed: 5000
+            transitionSpeed: 3000
         }
     }
 });
@@ -227,7 +240,6 @@ function getFiles(){
                 "<span>" + file.split(".")[0] + "</span>"+
                 "<img src='img/control/close.png'/>"+
             "</div>");
-      console.log("->"+file);
   });
 })
 }
@@ -279,4 +291,20 @@ function saveXML(name){
 }
 function getUserHome() {
   return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+}
+function loadTimer(){
+    clearTimeout(timerVar);
+    for(i=0;i<audios.length;i++){
+        audios[i].pause();
+        $("#slider"+i).fadeOut();
+        $("#"+moods[i] +" img").css("opacity","0.5");
+    }
+    Push.create('By Sound', {
+    body: 'The timer is up!',
+    icon: {
+        x400: __dirname+'img/logo.png',
+    },
+    timeout: 5000
+    });
+    $(".timer input").val("");
 }

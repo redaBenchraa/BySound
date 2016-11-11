@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "push.js": "0.0.11",
     "xml2js": "*"
   },
   "devDependencies": {

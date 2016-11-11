@@ -6,8 +6,9 @@
   height: 100%;
   z-index: 9999;
   background: #191518;
-  opacity: 0.99;
+  opacity: 0.95;
   overflow-y: auto;
+  overflow-x: none;
   -webkit-app-region: no-drag;
   display: none;
   box-shadow: 0px 0px 2px #121212;
@@ -28,7 +29,7 @@
   opacity: 0.7;
   -webkit-app-region: no-drag;
 }
-.gVolume img:active , .randomSounds img:active, .profileInput img:active{
+.gVolume img:active , .randomSounds img:active, .profileInput img:active,.timer img:active{
   opacity: 1;
 }
 .gVolume{
@@ -44,7 +45,7 @@
   top: -18;
   left: 40;
 }
-.randomSounds{
+.randomSounds, .timer{
   position: relative;
   display: block;
   margin: 30px;
@@ -86,6 +87,7 @@
   width: 70%;
   margin-right: 10px;
 }
+
 .listProfiles{
   position: relative;
   margin-top: 10px;
@@ -121,4 +123,32 @@
 }
 .profile:hover img{
   visibility: visible;
+}
+.timer input{
+  position: relative;
+  top: -10;
+  z-index: 1003;
+  border: none;
+  height: 30px;
+  border-radius: 5px;
+  -webkit-app-region: no-drag;
+  font-family: 'caviar',arial;
+  font-size: 15;
+  outline: none;
+  text-align: center;
+  padding: 5px;
+  width: 20%;
+  background: #1e1e1e;
+  color: white;
+  margin-right: 5px;
+  margin-left: 15px;
+}
+.timer::after {
+  position: relative;
+  top: -10;
+  z-index: 1003;
+  font-family: 'caviar',arial;
+  content: "minutes";
+  font-size: 15;
+  color: white;
 }
